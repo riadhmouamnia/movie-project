@@ -1,8 +1,5 @@
 import Head from "next/head"
 
-// MUI imports
-import Typography from "@mui/material/Typography"
-
 export default function Home() {
   return (
     <>
@@ -13,8 +10,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Typography variant="h1">Popcorn Palace</Typography>
-        <Typography variant="h4">Home page</Typography>
+        <h1 className="text-3xl font-bold underline">Popcorn Palace</h1>
+        <h2>Home page</h2>
       </main>
     </>
   )
