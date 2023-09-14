@@ -1,8 +1,7 @@
-import { Typography } from "@mui/material"
 import React from "react"
 
 function MovieDetails() {
-  return <Typography variant="h4">Details</Typography>
+  return <h1 className="dark:text-white text-2xl">Details</h1>
 }
 
 export default MovieDetails
