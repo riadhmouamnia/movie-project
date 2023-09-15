@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar/Navbar"
 import { getGenres } from "@/util/API"
 import { useEffect, useState } from "react"
@@ -18,6 +19,7 @@ export default function Layout({ children }) {
     <>
       <Navbar genres={genres} />
       <main>{children}</main>
+      <Footer />
     </>
   )
 }
