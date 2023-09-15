@@ -1,15 +1,16 @@
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react"
 import Link from "next/link"
 import { CiSearch } from "react-icons/ci"
 import { FiMenu } from "react-icons/fi"
 import SearchBar from "../SearchBar"
 import { useRouter } from "next/navigation"
+import Dropdown from "./Dropdown"
+import { moviesList } from "@/util/constants"
+import NavItem from "./NavItem"
 
-function Navbar() {
+function Navbar({ genres }) {
   const [open, setOpen] = useState(false)
   const searchRef = useRef(null)
-  const meviesListRef = useRef(null)
-  const genreRef = useRef(null)
   const router = useRouter()
   function handleSubmit(e) {
     e.preventDefault()
@@ -17,20 +18,17 @@ function Navbar() {
     console.log(searchText)
     router.push(`/movies/search?query=${searchText}`)
   }
-  function handleSelectGenre() {
-    const { value } = genreRef.current
-    if (value === "Genres") return
-    router.push(`/movies/genres/${value}`)
-    console.log(value)
-  }
-  function handleSelectList() {
-    const { value } = meviesListRef.current
-    if (value === "Movies") return
-    router.push(`/movies/movies-lists/${value}`)
-    console.log(value)
-  }
-  function handleClose() {
+
+  function handleToggoleMenu() {
     setOpen((prev) => !prev)
+  }
+
+  function handleCloseMenu() {
+    if (open) {
+      setOpen(false)
+    } else {
+      return
+    }
   }
   return (
     <>
@@ -41,10 +39,10 @@ function Navbar() {
               Popcorn Palace
             </h3>
           </Link>
-          {/* ----------- */}
+          {/* Mobile Buttons */}
           <div className="flex md:order-2">
             <button
-              onClick={handleClose}
+              onClick={handleToggoleMenu}
               type="button"
               data-collapse-toggle="navbar-search"
               aria-controls="navbar-search"
@@ -59,7 +57,7 @@ function Navbar() {
               <SearchBar searchRef={searchRef} handleSubmit={handleSubmit} />
             </div>
             <button
-              onClick={handleClose}
+              onClick={handleToggoleMenu}
               data-collapse-toggle="navbar-search"
               type="button"
               className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-800  md:hidden  dark:text-white "
@@ -70,7 +68,7 @@ function Navbar() {
               <FiMenu className="w-5 h-5" />
             </button>
           </div>
-          {/* --------------------------------MOBILE-------------------------------------------------------- */}
+          {/* End of Mobile Buttons */}
           <div
             className={`items-center justify-between ${
               open ? "" : "hidden"
@@ -80,55 +78,14 @@ function Navbar() {
             <div className=" mt-3 md:hidden ">
               <SearchBar />
             </div>
-            <ul className="flex md:items-center flex-col p-4 md:p-0 mt-4 font-medium border border-gray-10 md:flex-row md:space-x-8 md:mt-0 md:border-0  dark:border-gray-700">
+            <ul className="flex md:items-center flex-col p-4 md:p-2 mt-4 font-medium border border-gray-10 md:flex-row md:space-x-8 md:mt-0 md:border-0  dark:border-gray-700">
+              <NavItem text="Home" link="/" onClose={handleCloseMenu} />
+              <NavItem text="Actors" link="/actors" onClose={handleCloseMenu} />
               <li>
-                <Link
-                  onClick={handleClose}
-                  href="/"
-                  className="block py-2 pl-3 pr-4 dark:text-gray-400 hover:dark:text-white md:p-0 "
-                  aria-current="page"
-                >
-                  Home
-                </Link>
+                <Dropdown name="Movies" values={moviesList} />
               </li>
               <li>
-                <Link
-                  onClick={handleClose}
-                  href="/actors"
-                  className="block py-2 pl-3 pr-4 dark:text-gray-400 hover:dark:text-white md:p-0 "
-                  aria-current="page"
-                >
-                  Actors
-                </Link>
-              </li>
-              <li>
-                <select
-                  onChange={handleSelectList}
-                  ref={meviesListRef}
-                  id="Movies"
-                  className="border-gray-300 text-gray-900 p-2 outline-none dark:bg-slate-800  block w-full   dark:placeholder-gray-400 dark:text-gray-400 hover:dark:text-white"
-                >
-                  <option>Movies</option>
-                  <option value="topRated">Top Rate</option>
-                  <option value="popular">Popular</option>
-                  <option value="latest">Latest</option>
-                  <option value="nowPlaying">Now playing</option>
-                  <option value="upcoming">Upcoming</option>
-                </select>
-              </li>
-              <li>
-                <select
-                  onChange={handleSelectGenre}
-                  ref={genreRef}
-                  id="Genre"
-                  className="border-gray-300 text-gray-900 p-2 outline-none dark:bg-slate-800  block w-full   dark:placeholder-gray-400 dark:text-gray-400 hover:dark:text-white"
-                >
-                  <option>Genres</option>
-                  <option value="Action">Action</option>
-                  <option value="Adventure">Adventure</option>
-                  <option value="Comedy">Comedy</option>
-                  <option value="Crime">Crime</option>
-                </select>
+                <Dropdown name="Genres" values={genres} />
               </li>
             </ul>
           </div>

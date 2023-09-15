@@ -1,5 +1,3 @@
-import React from "react"
-
 function Button({ text, primary, secondary, ...rest }) {
   const btnPrimary =
     "bg-red-700 border border-red-700 text-white hover:bg-red-800 hover:border-red-800"
