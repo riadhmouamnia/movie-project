@@ -10,13 +10,17 @@ import NavItem from "./NavItem"
 
 function Navbar({ genres }) {
   const [open, setOpen] = useState(false)
+
   const searchRef = useRef(null)
   const router = useRouter()
   function handleSubmit(e) {
     e.preventDefault()
-    const searchText = searchRef.current.value
-    console.log(searchText)
-    router.push(`/movies/search?query=${searchText}`)
+    const search = searchRef.current.value
+    router.push({
+      pathname: "/movies",
+      query: { search },
+    })
+    // router.push(`/movies?query=${searchText}`)
   }
 
   function handleToggoleMenu() {

@@ -22,7 +22,6 @@ export default function Home({
   animeMovies,
   coverTrailer,
 }) {
-  console.log(horrorMovies)
   return (
     <>
       <Head>

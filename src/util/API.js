@@ -74,3 +74,17 @@ export const getMovieTrailer = async (id) => {
   const data = await res.json()
   return data
 }
+
+export const getMoviesBySearch = async (query) => {
+  const res = await fetch(
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}`,
+  )
+  const data = await res.json()
+  return data.results
+}
+
+export const getMovieById = async (id) => {
+  const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`)
+  const data = await res.json()
+  return data
+}
