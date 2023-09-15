@@ -1,5 +1,3 @@
-import React from "react"
-
 function MovieDetails() {
   return <h1 className="dark:text-white text-2xl">Details</h1>
 }
