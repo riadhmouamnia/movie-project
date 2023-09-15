@@ -32,7 +32,7 @@ function Navbar({ genres }) {
   }
   return (
     <>
-      <nav className=" border-b-slate-800 border-b-2">
+      <nav className=" fixed w-full z-30 top-0 left-0 bg-gradient-to-b from-slate-950 to-transparent">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link href="/" className="flex items-center">
             <h3 className="self-center text-2xl whitespace-nowrap text-red-700 font-black">
