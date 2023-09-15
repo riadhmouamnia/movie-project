@@ -1,5 +1,5 @@
 import Footer from "@/components/Footer"
-import Navbar from "@/components/Navbar/Navbar"
+import Navbar from "@/components/Navbar/index.js"
 import { getGenres } from "@/util/API"
 import { useEffect, useState } from "react"
 
@@ -18,7 +18,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Navbar genres={genres} />
-      <main>{children}</main>
+      <main className="min-h-[100vh]">{children}</main>
       <Footer />
     </>
   )
