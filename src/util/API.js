@@ -16,12 +16,12 @@ const options = {
 }
 
 const requests = {
-  requestPopular: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
+  requestPopular: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=4`,
   requestTopRated: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`,
-  requestTrending: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
-  requestHorror: `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&query=horror&page=1&include_adult=false`,
-  requestUpcoming: `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`,
-  requestLatestMovies: `${BASE_URL}/search/collection?api_key=${API_KEY}&query=anime&include_adult=false&language=en-US&page=1`,
+  requestTrending: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=2`,
+  requestHorror: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=27`,
+  requestUpcoming: `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=2`,
+  requestAnimation: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=16`,
 }
 
 export const getGenres = async () => {
@@ -57,14 +57,14 @@ export const getUpcomingMovies = async () => {
 }
 
 export const getAnime = async () => {
-  const res = await fetch(requests.requestLatestMovies)
+  const res = await fetch(requests.requestAnimation)
   const data = await res.json()
   return data.results
 }
 
 export const getRandomMovie = async () => {
   const movies = await getTrendingMovies()
-  const movie = movies[Math.floor(Math.random() * movies.length)]
+  const movie = await movies[Math.floor(Math.random() * movies.length)]
 
   return movie
 }
@@ -79,6 +79,19 @@ export const getMoviesBySearch = async (query) => {
   const res = await fetch(
     `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}`,
   )
+  const data = await res.json()
+  return data.results
+}
+
+export async function getMoviesByGenre(genreId) {
+  const res = await fetch(
+    `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`,
+  )
+  const data = await res.json()
+  return data.results
+}
+export async function getMoviesByCategory(category) {
+  const res = await fetch(`${BASE_URL}/movie/${category}?api_key=${API_KEY}`)
   const data = await res.json()
   return data.results
 }
