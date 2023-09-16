@@ -12,7 +12,7 @@ function MovieCard({ movie }) {
             alt={movie?.title}
           />
         ) : (
-          <div className="w-full h-[148px] bg-gray-900" />
+          <div className="w-full md:h-[7.9rem] xl:h-[9.3rem] h-[5.2rem] bg-gray-900" />
         )}
 
         <div className="absolute top-0 left-0 w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white">
