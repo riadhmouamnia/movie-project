@@ -1,5 +1,4 @@
-import PageCover from "@/components/PageCover"
-import Row from "@/components/Row"
+import dynamic from "next/dynamic"
 
 import {
   getAnime,
@@ -12,6 +11,15 @@ import {
   getUpcomingMovies,
 } from "@/util/API"
 import Head from "next/head"
+import RowPlaceHolder from "@/components/Row/RowPlaceHolder"
+import PageCoverPlaceHolder from "@/components/PageCover/PageCoverPlaceHolder"
+
+const PageCover = dynamic(() => import("@/components/PageCover"), {
+  loading: () => <PageCoverPlaceHolder />,
+})
+const Row = dynamic(() => import("@/components/Row"), {
+  loading: () => <RowPlaceHolder />,
+})
 
 export default function Home({
   trendingMovies,

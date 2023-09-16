@@ -1,96 +1,39 @@
-import MovieCard from "@/components/MovieCard"
+import MoviesCardGridPlaceHolder from "@/components/MoviesCardGrid/MoviesCardGridPlaceHolder"
+import PageCover from "@/components/PageCover"
 import SearchBar from "@/components/SearchBar"
 import {
-  getAllMoviesByCategory,
   getMoviesByCategory,
-  getMoviesByCategoryAndPage,
   getMoviesByGenre,
   getMoviesBySearch,
 } from "@/util/API"
-import Image from "next/image"
+import dynamic from "next/dynamic"
+
+const MoviesCardGrid = dynamic(() => import("@/components/MoviesCardGrid"), {
+  loading: () => <MoviesCardGridPlaceHolder />,
+})
+const SimpleCover = dynamic(() => import("@/components/SimpleCover"), {
+  loading: () => <PageCover />,
+})
 
 function MoviesPage({ movies, category, genre, name, search }) {
-  console.log({ name, movies })
   return (
     <>
-      <div className="w-full h-[600px] text-white mb-4 ">
-        <div className="w-full h-full">
-          <div className="absolute w-full h-[600px] bg-gradient-to-b after: from-black opacity-70 z-10"></div>
-          <div className="h-[600px] relative">
-            <Image
-              fill
-              className="w-full h-full object-cover"
-              src="https://www.screentest.xyz/wp-content/uploads/2022/09/netflix.jpg"
-              alt="cover image"
-              priority
-            />
-            <div className="absolute w-full h-[600px] bg-gradient-to-t from-black opacity-70 z-10"></div>
-          </div>
-          <div className="absolute w-full flex flex-col items-center text-center top-[20%] p-4 md:p-8 z-20 my-4">
-            <h1 className="text-3xl md:text-5xl font-extrabold mb-4">
-              Unlimited movies, TV shows, and more
-            </h1>
-            <h2 className="md:text-3xl text-xl font-semibold">
-              Start buy looking for your favorite movie
-            </h2>
-            <div className="min-w-[80%] md:min-w-[50%] mt-8">
-              <SearchBar />
-            </div>
-          </div>
-        </div>
-      </div>
+      <SimpleCover
+        imageUrl="https://www.screentest.xyz/wp-content/uploads/2022/09/netflix.jpg"
+        title="Unlimited movies, TV shows, and more"
+        subTitle="Start buy looking for your favorite movie"
+        searchBar={<SearchBar />}
+      />
       <main>
         {/* IF WE HAVE A SEARCH */}
-        {search && (
-          <>
-            <h2 className="text-4xl font-black text-center dark:text-white mt-20">
-              {search}
-            </h2>
-            <div className="flex gap-2 flex-wrap w-full justify-center my-20">
-              {movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </div>
-          </>
-        )}
+        {search && <MoviesCardGrid title={search} movies={movies} />}
         {/* IF WE HAVE A GENRE SELECTED */}
-        {genre && (
-          <>
-            <h2 className="text-4xl font-black text-center dark:text-white mt-20">
-              {name}
-            </h2>
-            <div className="flex gap-2 flex-wrap w-full justify-center my-20">
-              {movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </div>
-          </>
-        )}
+        {genre && <MoviesCardGrid title={name} movies={movies} />}
         {/* IF WE HAVE A CATEGORY SELECTED */}
-        {category && (
-          <>
-            <h2 className="text-4xl font-black text-center dark:text-white mt-20">
-              {name}
-            </h2>
-            <div className="flex gap-2 flex-wrap w-full justify-center my-20">
-              {movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </div>
-          </>
-        )}
+        {category && <MoviesCardGrid title={name} movies={movies} />}
         {/* IF WE HAVE NOTHING SELECTED */}
         {!category & !genre & !search && (
-          <>
-            <h2 className="text-4xl font-black text-center dark:text-white mt-20">
-              {name}
-            </h2>
-            <div className="flex gap-2 flex-wrap w-full justify-center my-20">
-              {movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </div>
-          </>
+          <MoviesCardGrid title={name} movies={movies} />
         )}
       </main>
     </>
