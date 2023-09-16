@@ -1,9 +1,9 @@
 export const moviesList = [
-  { id: 1, name: "Top Rate" },
-  { id: 2, name: "Popular" },
-  { id: 3, name: "Latest" },
-  { id: 4, name: "Now playing" },
-  { id: 5, name: "Upcoming" },
+  { id: "top_rated", name: "Top Rate" },
+  { id: "popular", name: "Popular" },
+  // { id: "latest", name: "Latest" },
+  { id: "now_playing", name: "Now playing" },
+  { id: "upcoming", name: "Upcoming" },
 ]
 
 export const teamMembers = [

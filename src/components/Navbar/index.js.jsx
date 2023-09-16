@@ -20,7 +20,23 @@ function Navbar({ genres }) {
       pathname: "/movies",
       query: { search },
     })
-    // router.push(`/movies?query=${searchText}`)
+  }
+
+  function handleSelect(id, name, title) {
+    console.log("from: ", id)
+    if (title === "Movies") {
+      const category = id
+      router.push({
+        pathname: "/movies",
+        query: { name, category },
+      })
+    } else {
+      const genre = id
+      router.push({
+        pathname: "/movies",
+        query: { name, genre },
+      })
+    }
   }
 
   function handleToggoleMenu() {
@@ -86,10 +102,18 @@ function Navbar({ genres }) {
               <NavItem text="Home" link="/" onClose={handleCloseMenu} />
               <NavItem text="Actors" link="/actors" onClose={handleCloseMenu} />
               <li>
-                <Dropdown name="Movies" values={moviesList} />
+                <Dropdown
+                  name="Movies"
+                  values={moviesList}
+                  onSelect={handleSelect}
+                />
               </li>
               <li>
-                <Dropdown name="Genres" values={genres} />
+                <Dropdown
+                  name="Genres"
+                  values={genres}
+                  onSelect={handleSelect}
+                />
               </li>
             </ul>
           </div>

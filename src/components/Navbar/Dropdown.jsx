@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { BiChevronUp, BiChevronDown } from "react-icons/bi"
 
-const Dropdown = ({ name, values }) => {
+const Dropdown = ({ name, values, onSelect }) => {
   const [open, setOpen] = useState(false)
   function toggleDropdown() {
     setOpen((prev) => !prev)
@@ -25,20 +25,20 @@ const Dropdown = ({ name, values }) => {
       <div
         className={`${
           open ? "" : "hidden"
-        } z-10 bg-white divide-y divide-gray-100 shadow w-44 dark:bg-slate-800 absolute mt-1.5`}
+        } z-10 bg-white divide-y divide-gray-100 shadow w-44 dark:bg-slate-800 absolute mt-1.5 scroll max-h-60 overflow-y-scroll no-scrollbar`}
       >
         <ul
-          className="py-2 text-sm text-gray-700 dark:text-gray-200"
+          className="py-2 text-sm text-gray-700 dark:text-gray-200 "
           aria-labelledby="dropdownDefaultButton"
         >
           {values.map((value) => (
             <li
               key={value.id}
-              onClick={() => {
-                console.log(value.name)
+              onClick={(e) => {
+                onSelect(value.id, value.name, name)
                 toggleDropdown()
               }}
-              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              className="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >
               {value.name}
             </li>

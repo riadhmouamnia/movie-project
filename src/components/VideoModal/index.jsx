@@ -49,7 +49,7 @@ function VideoModal({ open, onClose, trailer }) {
               <AiOutlineCloseCircle />
             </button>
             <div className="p-6 text-center w-full h-full flex items-center justify-center">
-              {tarilerKey && (
+              {trailer && (
                 <YouTube
                   videoId={tarilerKey}
                   opts={opts}

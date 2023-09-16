@@ -1,9 +1,16 @@
 import MovieCard from "@/components/MovieCard"
 import SearchBar from "@/components/SearchBar"
-import { getMoviesBySearch } from "@/util/API"
+import {
+  getAllMoviesByCategory,
+  getMoviesByCategory,
+  getMoviesByCategoryAndPage,
+  getMoviesByGenre,
+  getMoviesBySearch,
+} from "@/util/API"
 import Image from "next/image"
 
-function MoviesPage({ movies, search }) {
+function MoviesPage({ movies, category, genre, name, search }) {
+  console.log({ name, movies })
   return (
     <>
       <div className="w-full h-[600px] text-white mb-4 ">
@@ -33,10 +40,50 @@ function MoviesPage({ movies, search }) {
         </div>
       </div>
       <main>
+        {/* IF WE HAVE A SEARCH */}
         {search && (
           <>
             <h2 className="text-4xl font-black text-center dark:text-white mt-20">
-              Search Result of: {search}
+              {search}
+            </h2>
+            <div className="flex gap-2 flex-wrap w-full justify-center my-20">
+              {movies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+          </>
+        )}
+        {/* IF WE HAVE A GENRE SELECTED */}
+        {genre && (
+          <>
+            <h2 className="text-4xl font-black text-center dark:text-white mt-20">
+              {name}
+            </h2>
+            <div className="flex gap-2 flex-wrap w-full justify-center my-20">
+              {movies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+          </>
+        )}
+        {/* IF WE HAVE A CATEGORY SELECTED */}
+        {category && (
+          <>
+            <h2 className="text-4xl font-black text-center dark:text-white mt-20">
+              {name}
+            </h2>
+            <div className="flex gap-2 flex-wrap w-full justify-center my-20">
+              {movies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+          </>
+        )}
+        {/* IF WE HAVE NOTHING SELECTED */}
+        {!category & !genre & !search && (
+          <>
+            <h2 className="text-4xl font-black text-center dark:text-white mt-20">
+              {name}
             </h2>
             <div className="flex gap-2 flex-wrap w-full justify-center my-20">
               {movies.map((movie) => (
@@ -53,8 +100,41 @@ function MoviesPage({ movies, search }) {
 export default MoviesPage
 
 export async function getServerSideProps({ query }) {
-  const search = query.search
-  const movies = await getMoviesBySearch(search)
+  const { category, genre, name, search } = query
 
-  return { props: { movies, search } }
+  if (category) {
+    const movies = await getMoviesByCategory(category)
+    return {
+      props: {
+        movies,
+        category,
+        name,
+      },
+    }
+  } else if (genre) {
+    const movies = await getMoviesByGenre(genre)
+    return {
+      props: {
+        movies,
+        genre,
+        name,
+      },
+    }
+  } else if (search) {
+    const movies = await getMoviesBySearch(search)
+    return {
+      props: {
+        movies,
+        search,
+      },
+    }
+  } else {
+    const movies = await getMoviesByCategory("now_playing")
+    return {
+      props: {
+        movies,
+        name: "Now Playing",
+      },
+    }
+  }
 }
