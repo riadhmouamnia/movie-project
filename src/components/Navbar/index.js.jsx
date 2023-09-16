@@ -20,6 +20,7 @@ function Navbar({ genres }) {
       pathname: "/movies",
       query: { search },
     })
+    searchRef.current.value = ""
   }
 
   function handleSelect(id, name, title) {
