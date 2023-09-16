@@ -101,3 +101,14 @@ export const getMovieById = async (id) => {
   const data = await res.json()
   return data
 }
+
+export const getSimilarMovies = async (id) => {
+  const res = await fetch(`${BASE_URL}/movie/${id}/similar?api_key=${API_KEY}`)
+  const data = await res.json()
+  return data.results
+}
+export const getMovieActors = async (id) => {
+  const res = await fetch(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}`)
+  const data = await res.json()
+  return data.cast
+}
