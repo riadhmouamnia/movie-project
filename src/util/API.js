@@ -102,6 +102,20 @@ export const getMovieById = async (id) => {
   return data
 }
 
+
+export const getActors = async () => {
+  const res = await fetch(
+    `${BASE_URL}/person/popular?api_key=${API_KEY}&page=1`,
+  )
+  const data = await res.json()
+  return data.results
+}
+
+export const getSingleActor = async (actorId) => {
+  const res = await fetch(`${BASE_URL}/person/${actorId}?api_key=${API_KEY}`)
+  const data = await res.json()
+  return data
+
 export const getSimilarMovies = async (id) => {
   const res = await fetch(`${BASE_URL}/movie/${id}/similar?api_key=${API_KEY}`)
   const data = await res.json()
@@ -111,4 +125,5 @@ export const getMovieActors = async (id) => {
   const res = await fetch(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}`)
   const data = await res.json()
   return data.cast
+
 }
