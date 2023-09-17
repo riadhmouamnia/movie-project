@@ -13,9 +13,11 @@ function Row({ title, movies, rowID }) {
 
   return (
     <>
-      <h2 className="dark:text-white font-bold text-2xl md:text-3xl md p-4">
-        {title}
-      </h2>
+      {title && (
+        <h2 className="dark:text-white font-bold text-2xl md:text-3xl md p-4">
+          {title}
+        </h2>
+      )}
       <div className="relative flex items-center group">
         <MdChevronLeft
           onClick={slideLeft}
