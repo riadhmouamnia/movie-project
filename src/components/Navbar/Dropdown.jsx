@@ -9,8 +9,10 @@ const Dropdown = ({ name, values, onSelect }) => {
   return (
     <div className="relative">
       <button
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
         onClick={toggleDropdown}
-        className="flex items-center dark:text-gray-400 hover:dark:text-white focus:outline-none md:p-0 py-2 pl-3 pr-4"
+        className="flex items-center border-b-4 border-transparent dark:text-gray-400 hover:text-red-500 hover:border-red-500 hover:border-b-4 focus:outline-none md:p-0 py-2 pl-3 pr-4"
         type="button"
       >
         <span>{name}</span>
@@ -23,9 +25,11 @@ const Dropdown = ({ name, values, onSelect }) => {
         </span>
       </button>
       <div
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
         className={`${
           open ? "" : "hidden"
-        } z-10 bg-white divide-y divide-gray-100 shadow w-44 dark:bg-slate-800 absolute mt-1.5 scroll max-h-60 overflow-y-scroll no-scrollbar`}
+        } w-80 py-4 dark:bg-slate-800 absolute scroll max-h-60 overflow-y-scroll no-scrollbar`}
       >
         <ul
           className="py-2 text-sm text-gray-700 dark:text-gray-200 "
