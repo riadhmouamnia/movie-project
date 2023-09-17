@@ -5,7 +5,7 @@ const { default: Link } = require("next/link")
 
 const ActorCard = ({ id, profile_path, name }) => {
   return (
-    <Link className="text-decoration-none" href={"/movies/" + id}>
+    <Link className="text-decoration-none" href={"/actors/" + id}>
       <div className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2">
         {profile_path ? (
           <img

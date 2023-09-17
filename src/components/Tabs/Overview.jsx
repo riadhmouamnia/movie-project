@@ -15,7 +15,7 @@ function Overview({ movie, similar }) {
             className="text-sm dark:text-white flex gap-4 items-center"
           >
             {lang.english_name}
-            {index < movie.spoken_languages - 1 ? ", " : ""}
+            {index < movie.spoken_languages.length - 1 ? ", " : ""}
           </span>
         ))}
       </p>
