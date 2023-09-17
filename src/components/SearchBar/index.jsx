@@ -15,7 +15,7 @@ function SearchBar({ searchRef, handleSubmit, ...rest }) {
           {...rest}
           type="text"
           id="search-navbar"
-          className="block w-full p-2 pl-10 text-sm text-gray-900 border border-slate-600  bg-gray-50 dark:bg-black dark:bg-opacity-25  dark:placeholder-gray-500 dark:text-white"
+          className="block w-full p-2 pl-10 text-md text-gray-900 border border-slate-600  bg-gray-50 dark:bg-black dark:bg-opacity-25  dark:placeholder-gray-500 dark:text-white"
           placeholder="Search..."
           required
         />

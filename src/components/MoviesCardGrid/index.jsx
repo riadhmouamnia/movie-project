@@ -14,7 +14,7 @@ const MoviesCardGrid = ({
         {title}
       </h2>
       <div className="flex gap-2 flex-wrap w-full justify-center my-20">
-        {movies?.map((movie) => (
+        {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>

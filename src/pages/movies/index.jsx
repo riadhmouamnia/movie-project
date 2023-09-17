@@ -1,5 +1,5 @@
 import MoviesCardGridPlaceHolder from "@/components/MoviesCardGrid/MoviesCardGridPlaceHolder"
-import PageCover from "@/components/PageCover"
+import PageCoverPlaceHolder from "@/components/PageCover/PageCoverPlaceHolder"
 import SearchBar from "@/components/SearchBar"
 
 import {
@@ -14,7 +14,7 @@ const MoviesCardGrid = dynamic(() => import("@/components/MoviesCardGrid"), {
   loading: () => <MoviesCardGridPlaceHolder />,
 })
 const SimpleCover = dynamic(() => import("@/components/SimpleCover"), {
-  loading: () => <PageCover />,
+  loading: () => <PageCoverPlaceHolder />,
 })
 
 function MoviesPage({ category, genre, name, search }) {
