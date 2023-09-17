@@ -15,6 +15,12 @@ const nextConfig = {
         port: "",
         pathname: "/wp-content/uploads/2022/09/**",
       },
+      {
+        protocol: "https",
+        hostname: "variety.com",
+        port: "",
+        pathname: "/wp-content/uploads/2022/03/**",
+      },
     ],
   },
 }

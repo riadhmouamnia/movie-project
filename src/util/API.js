@@ -117,6 +117,15 @@ export const getSingleActor = async (actorId) => {
   return data
 }
 
+export const getActorsByName = async (name) => {
+  const res = await fetch(
+    `${BASE_URL}/search/person?api_key=${API_KEY}&query=${name}`,
+  )
+  const data = await res.json()
+
+  return data
+}
+
 // get all pages
 export const getAllMoviesByGenre = async (genreId, page) => {
   const res = await fetch(
