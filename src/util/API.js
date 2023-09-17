@@ -1,19 +1,9 @@
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY
-const ACCESS_TOKEN = process.env.NEXT_PUBLIC_ACCESS_TOKEN
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 //Images base URL
 export const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500/"
 export const IMAGE_BASE_URL_ORIGINAL = "https://image.tmdb.org/t/p/original/"
-
-// fetch options
-const options = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${ACCESS_TOKEN}`,
-  },
-}
 
 const requests = {
   requestPopular: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=4`,
@@ -22,10 +12,11 @@ const requests = {
   requestHorror: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=27`,
   requestUpcoming: `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=2`,
   requestAnimation: `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=16`,
+  requestGenres: `${BASE_URL}/genre/movie/list?api_key=${API_KEY}`,
 }
 
 export const getGenres = async () => {
-  const res = await fetch(`${BASE_URL}/genre/movie/list?language=en`, options)
+  const res = await fetch(requests.requestGenres)
   const data = await res.json()
   return data.genres
 }
@@ -83,14 +74,14 @@ export const getMoviesBySearch = async (query) => {
   return data.results
 }
 
-export async function getMoviesByGenre(genreId) {
+export const getMoviesByGenre = async (genreId) => {
   const res = await fetch(
     `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`,
   )
   const data = await res.json()
   return data.results
 }
-export async function getMoviesByCategory(category) {
+export const getMoviesByCategory = async (category) => {
   const res = await fetch(`${BASE_URL}/movie/${category}?api_key=${API_KEY}`)
   const data = await res.json()
   return data.results
@@ -102,20 +93,6 @@ export const getMovieById = async (id) => {
   return data
 }
 
-
-export const getActors = async () => {
-  const res = await fetch(
-    `${BASE_URL}/person/popular?api_key=${API_KEY}&page=1`,
-  )
-  const data = await res.json()
-  return data.results
-}
-
-export const getSingleActor = async (actorId) => {
-  const res = await fetch(`${BASE_URL}/person/${actorId}?api_key=${API_KEY}`)
-  const data = await res.json()
-  return data
-
 export const getSimilarMovies = async (id) => {
   const res = await fetch(`${BASE_URL}/movie/${id}/similar?api_key=${API_KEY}`)
   const data = await res.json()
@@ -125,5 +102,51 @@ export const getMovieActors = async (id) => {
   const res = await fetch(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}`)
   const data = await res.json()
   return data.cast
+}
 
+export const getActors = async (currentPage) => {
+  const res = await fetch(
+    `${BASE_URL}/person/popular?api_key=${API_KEY}&page=${currentPage}`,
+  )
+  const data = await res.json()
+  return data
+}
+export const getSingleActor = async (actorId) => {
+  const res = await fetch(`${BASE_URL}/person/${actorId}?api_key=${API_KEY}`)
+  const data = await res.json()
+  return data
+}
+
+// get all pages
+export const getAllMoviesByGenre = async (genreId, page) => {
+  const res = await fetch(
+    `${BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&page=${page}`,
+  )
+  const data = await res.json()
+  return data
+}
+
+export const getAllMoviesBySearch = async (query, page) => {
+  const res = await fetch(
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`,
+  )
+  const data = await res.json()
+  return data
+}
+
+export const getAllMoviesByCategory = async (category, page) => {
+  const res = await fetch(
+    `${BASE_URL}/movie/${category}?api_key=${API_KEY}&page=${page}`,
+  )
+  const data = await res.json()
+  return data
+}
+
+export const getMoviesByActorId = async (actorId) => {
+  const res = await fetch(
+    `${BASE_URL}/person/${actorId}/movie_credits?api_key=${API_KEY}`,
+  )
+  const data = await res.json()
+
+  return data.cast
 }
