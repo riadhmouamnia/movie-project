@@ -1,14 +1,13 @@
+import dynamic from "next/dynamic"
+import { useRef } from "react"
+import { useRouter } from "next/navigation"
+
 import MoviesCardGridPlaceHolder from "@/components/MoviesCardGrid/MoviesCardGridPlaceHolder"
 import PageCoverPlaceHolder from "@/components/PageCover/PageCoverPlaceHolder"
+import PaginationBar from "@/components/PaginationBar"
 import SearchBar from "@/components/SearchBar"
 
-import {
-  getAllMoviesByCategory,
-  getAllMoviesByGenre,
-  getAllMoviesBySearch,
-} from "@/util/API"
-import dynamic from "next/dynamic"
-import { useEffect, useState } from "react"
+import { fetchMovies } from "@/util/API"
 
 const MoviesCardGrid = dynamic(() => import("@/components/MoviesCardGrid"), {
   loading: () => <MoviesCardGridPlaceHolder />,
@@ -17,115 +16,60 @@ const SimpleCover = dynamic(() => import("@/components/SimpleCover"), {
   loading: () => <PageCoverPlaceHolder />,
 })
 
-function MoviesPage({ category, genre, name, search }) {
-  const [movies, setMovies] = useState([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(0)
-  const [error, setError] = useState(null)
+function MoviesPage({ movies, name, category, genre, search, page, limit }) {
+  const searchRef = useRef()
+  const router = useRouter()
+  const queryParams = { search, category, genre }
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      if (search) {
-        try {
-          const moviesData = await getAllMoviesBySearch(search, currentPage)
-          const pages = moviesData.total_pages
-          setTotalPages(pages > 500 ? 500 : pages)
-          setMovies(moviesData.results)
-        } catch (error) {
-          console.error(error)
-          setError(error.message)
-        }
-      } else if (category) {
-        try {
-          const moviesData = await getAllMoviesByCategory(category, currentPage)
-          const pages = moviesData.total_pages
-          setTotalPages(pages > 500 ? 500 : pages)
-          setMovies(moviesData.results)
-        } catch (error) {
-          console.error(error)
-          setError(error.message)
-        }
-      } else if (genre) {
-        try {
-          const moviesData = await getAllMoviesByGenre(genre, currentPage)
-          const pages = moviesData.total_pages
-          setTotalPages(pages > 500 ? 500 : pages)
-          setMovies(moviesData.results)
-        } catch (error) {
-          console.error(error)
-          setError(error.message)
-        }
-      } else {
-        try {
-          const moviesData = await getAllMoviesByCategory(
-            "now_playing",
-            currentPage,
-          )
-          const pages = moviesData.total_pages
-          setTotalPages(pages > 500 ? 500 : pages)
-          setMovies(moviesData.results)
-        } catch (error) {
-          console.error(error)
-          setError(error.message)
-        }
-      }
-    }
+  function handleSearch(e) {
+    e.preventDefault()
+    const search = searchRef.current.value
+    console.log(search)
+    router.push({
+      pathname: "/movies",
+      query: { search, category, genre, page: 1 },
+    })
+    searchRef.current.value = ""
+  }
 
-    fetchMovies()
-  }, [currentPage, totalPages])
-
-  useEffect(() => {
-    setCurrentPage(1)
-  }, [category, genre, name, search])
   return (
     <>
       <SimpleCover
         imageUrl="https://www.screentest.xyz/wp-content/uploads/2022/09/netflix.jpg"
         title="Unlimited movies, TV shows, and more"
         subTitle="Start buy looking for your favorite movie"
-        searchBar={<SearchBar />}
+        searchBar={
+          <SearchBar
+            placeholder="Search for an movie"
+            searchRef={searchRef}
+            handleSubmit={handleSearch}
+            size="lg"
+            btnText="Search"
+          />
+        }
       />
       <main>
-        {/* IF WE HAVE A SEARCH */}
-        {search && (
-          <MoviesCardGrid
-            title={search}
-            movies={movies}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
+        <div className="flex mx-auto max-w-6xl border-b-4 pb-3 border-red-600 items-center justify-between">
+          <h2 className="dark:text-white text-3xl">{name}</h2>
+          <PaginationBar
+            pathname="/movies"
+            limit={limit}
+            page={page}
+            queryParams={queryParams}
           />
-        )}
-        {/* IF WE HAVE A GENRE SELECTED */}
-        {genre && (
-          <MoviesCardGrid
-            title={name}
-            movies={movies}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
+        </div>
+        <div className="my-8">
+          <MoviesCardGrid movies={movies} />
+        </div>
+        <div className="flex mx-auto max-w-6xl border-t-4 pt-3 mb-20 border-red-600 items-center justify-between">
+          <h2 className="dark:text-white text-3xl">{name}</h2>
+          <PaginationBar
+            pathname="/movies"
+            limit={limit}
+            page={page}
+            queryParams={queryParams}
           />
-        )}
-        {/* IF WE HAVE A CATEGORY SELECTED */}
-        {category && (
-          <MoviesCardGrid
-            title={name}
-            movies={movies}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
-        )}
-        {/* IF WE HAVE NOTHING SELECTED */}
-        {!category & !genre & !search && (
-          <MoviesCardGrid
-            title={name}
-            movies={movies}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
-        )}
+        </div>
       </main>
     </>
   )
@@ -134,33 +78,23 @@ function MoviesPage({ category, genre, name, search }) {
 export default MoviesPage
 
 export async function getServerSideProps({ query }) {
-  const { category, genre, name, search } = query
-
-  if (category) {
-    return {
-      props: {
-        category,
-        name,
-      },
-    }
-  } else if (genre) {
-    return {
-      props: {
-        genre,
-        name,
-      },
-    }
-  } else if (search) {
-    return {
-      props: {
-        search,
-      },
-    }
-  } else {
-    return {
-      props: {
-        name: "Now Playing",
-      },
-    }
+  const page = query.page ? Number(query.page) : 1
+  const category = query.category ? query.category : ""
+  const genre = query.genre ? query.genre : ""
+  const name = query.name ? query.name : "Movies"
+  const search = query.search ? query.search : ""
+  const data = await fetchMovies(search, category, genre, page)
+  const limit = data.total_pages > 20 ? 20 : data.total_pages
+  const movies = await data.results
+  return {
+    props: {
+      movies,
+      name,
+      category,
+      genre,
+      search,
+      page,
+      limit,
+    },
   }
 }
