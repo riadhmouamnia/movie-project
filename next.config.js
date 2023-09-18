@@ -21,6 +21,12 @@ const nextConfig = {
         port: "",
         pathname: "/wp-content/uploads/2022/03/**",
       },
+      {
+        protocol: "https",
+        hostname: "www.economiadigital.es",
+        port: "",
+        pathname: "/wp-content/uploads/2021/03/**",
+      },
     ],
   },
 }
