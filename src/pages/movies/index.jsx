@@ -20,7 +20,7 @@ const SimpleCover = dynamic(() => import("@/components/SimpleCover"), {
 function MoviesPage({ movies, name, category, genre, search, page, limit }) {
   const searchRef = useRef()
   const router = useRouter()
-  const queryParams = { search, category, genre }
+  const queryParams = { name, search, category, genre }
 
   function handleSearch(e) {
     e.preventDefault()
@@ -89,7 +89,7 @@ export async function getServerSideProps({ query }) {
   const page = query.page ? Number(query.page) : 1
   const category = query.category ? query.category : ""
   const genre = query.genre ? query.genre : ""
-  const name = query.name ? query.name : "Movies"
+  const name = query.name ? query.name : query.search
   const search = query.search ? query.search : ""
   const data = await fetchMovies(search, category, genre, page)
   const limit = data.total_pages > 20 ? 20 : data.total_pages
