@@ -129,17 +129,32 @@ export const getMoviesByActorId = async (actorId) => {
 }
 
 // TV Shows
-export const getPopularTVShows = async (page) => {
-  const res = await fetch(
-    `${BASE_URL}/tv/popular?api_key=${API_KEY}&page=${page}`,
-  )
-  const data = await res.json()
+export const getTVShows = async (query, page) => {
+  if (query && page) {
+    try {
+      const res = await fetch(
+        `${BASE_URL}/search/tv?api_key=${API_KEY}&query=${query}&page=${page}`,
+      )
+      const data = await res.json()
 
-  return data
+      return data
+    } catch (error) {
+      console.log(error)
+    }
+  } else {
+    try {
+      const res = await fetch(
+        `${BASE_URL}/tv/popular?api_key=${API_KEY}&page=${page}`,
+      )
+      const data = await res.json()
+      return data
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
-// show details
-
+// Tv Show details
 export const getShowById = async (showId) => {
   const res = await fetch(
     `${BASE_URL}/tv/${showId}?api_key=${API_KEY}&language=en-US`,
