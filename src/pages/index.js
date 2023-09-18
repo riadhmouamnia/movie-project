@@ -1,16 +1,13 @@
 import dynamic from "next/dynamic"
+import Head from "next/head"
 
 import {
-  getAnime,
-  getHorrorMovies,
+  getHomePageMovies,
   getMovieTrailer,
-  getPopularMovies,
   getRandomMovie,
-  getTopRatedMovies,
-  getTrendingMovies,
-  getUpcomingMovies,
+  requests,
 } from "@/util/API"
-import Head from "next/head"
+
 import RowPlaceHolder from "@/components/Row/RowPlaceHolder"
 import PageCoverPlaceHolder from "@/components/PageCover/PageCoverPlaceHolder"
 
@@ -54,12 +51,25 @@ export default function Home({
 }
 
 export async function getStaticProps() {
-  const trendingMovies = await getTrendingMovies()
-  const upcomingMovies = await getUpcomingMovies()
-  const horrorMovies = await getHorrorMovies()
-  const popularMovies = await getPopularMovies()
-  const topRatedMovies = await getTopRatedMovies()
-  const animeMovies = await getAnime()
+  const promises = [
+    getHomePageMovies(requests.requestTrending),
+    getHomePageMovies(requests.requestUpcoming),
+    getHomePageMovies(requests.requestHorror),
+    getHomePageMovies(requests.requestPopular),
+    getHomePageMovies(requests.requestTopRated),
+    getHomePageMovies(requests.requestAnimation),
+  ]
+
+  // Wait for all of the promises to resolve
+  // to avoid a waterfall approach and fetch data in parallel
+  const [
+    trendingMovies,
+    upcomingMovies,
+    horrorMovies,
+    popularMovies,
+    topRatedMovies,
+    animeMovies,
+  ] = await Promise.all(promises)
   const randomMovie = await getRandomMovie()
   const coverTrailer = await getMovieTrailer(randomMovie.id)
 

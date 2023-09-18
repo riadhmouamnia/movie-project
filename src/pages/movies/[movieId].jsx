@@ -1,4 +1,8 @@
+import Image from "next/image"
+import { BsFillStarFill } from "react-icons/bs"
+
 import Tabs from "@/components/Tabs"
+
 import {
   IMAGE_BASE_URL_ORIGINAL,
   getMovieActors,
@@ -6,8 +10,6 @@ import {
   getMovieTrailer,
   getSimilarMovies,
 } from "@/util/API"
-import Image from "next/image"
-import { BsFillStarFill } from "react-icons/bs"
 
 function MovieDetails({ movie, similarMovies, trailer, actors }) {
   const [releseYear] = movie.release_date.split("-")
