@@ -16,9 +16,10 @@ function Navbar({ genres }) {
   function handleSubmit(e) {
     e.preventDefault()
     const search = searchRef.current.value
+    const name = search
     router.push({
       pathname: "/movies",
-      query: { search, category: "", genre: "", page: 1 },
+      query: { name, search, category: "", genre: "", page: 1 },
     })
     searchRef.current.value = ""
   }
@@ -29,13 +30,13 @@ function Navbar({ genres }) {
       const category = id
       router.push({
         pathname: "/movies",
-        query: { search: "", category, genre: "", page: 1 },
+        query: { name, search: "", category, genre: "", page: 1 },
       })
     } else {
       const genre = id
       router.push({
         pathname: "/movies",
-        query: { search: "", category: "", genre, page: 1 },
+        query: { name, search: "", category: "", genre, page: 1 },
       })
     }
   }
