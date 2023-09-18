@@ -4,6 +4,7 @@ import {
   getMoviesByActorId,
   getSingleActor,
 } from "@/util/API"
+import Head from "next/head"
 import Image from "next/image"
 import { BsFillStarFill } from "react-icons/bs"
 
@@ -12,6 +13,10 @@ function ActorDetails({ actor, movies }) {
   console.log(actor)
   return (
     <>
+      <Head>
+        <title>{actor.name}</title>
+        <meta name="description" content={actor.biography} />
+      </Head>
       <div className="h-[70px] lg:h-[100px] md:h-[150px]"></div>
       <main className="grid gap-8 md:grid-cols-6 xl:px-20 p-8">
         <div className="w-[200px] md:w-full h-[200px] md:h-[620px] mx-auto md:min-h-[600px] xl:min-h-[660px] md:col-span-2 relative">

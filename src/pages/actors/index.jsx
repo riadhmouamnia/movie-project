@@ -8,6 +8,7 @@ import PageCoverPlaceHolder from "@/components/PageCover/PageCoverPlaceHolder"
 import PaginationBar from "@/components/PaginationBar"
 
 import { fetchActors } from "@/util/API"
+import Head from "next/head"
 
 // lazy UI
 const ActorCard = dynamic(() => import("@/components/ActorCard"), {
@@ -33,6 +34,13 @@ const ActorsPage = ({ page, actors, search, limit }) => {
   }
   return (
     <>
+      <Head>
+        <title>Popular Actors</title>
+        <meta
+          name="description"
+          content="See the stars of your favorite movies and TV shows up close and personal."
+        />
+      </Head>
       <SimpleCover
         title="The actors who bring our favorite characters to life."
         subTitle="See the stars of your favorite movies and TV shows up close and personal."

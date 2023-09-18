@@ -8,6 +8,7 @@ import PaginationBar from "@/components/PaginationBar"
 import SearchBar from "@/components/SearchBar"
 
 import { fetchMovies } from "@/util/API"
+import Head from "next/head"
 
 const MoviesCardGrid = dynamic(() => import("@/components/MoviesCardGrid"), {
   loading: () => <MoviesCardGridPlaceHolder />,
@@ -34,6 +35,13 @@ function MoviesPage({ movies, name, category, genre, search, page, limit }) {
 
   return (
     <>
+      <Head>
+        <title>{name}</title>
+        <meta
+          name="description"
+          content="Unlimited movies, TV shows, and more"
+        />
+      </Head>
       <SimpleCover
         imageUrl="https://www.screentest.xyz/wp-content/uploads/2022/09/netflix.jpg"
         title="Unlimited movies, TV shows, and more"

@@ -6,6 +6,7 @@ import TvShowCard from "@/components/TvShowCard"
 import SearchBar from "@/components/SearchBar"
 import SimpleCover from "@/components/SimpleCover"
 import PaginationBar from "@/components/PaginationBar"
+import Head from "next/head"
 
 function TvShowsPage({ tvShows, page, search, limit }) {
   const searchRef = useRef()
@@ -23,47 +24,56 @@ function TvShowsPage({ tvShows, page, search, limit }) {
   }
 
   return (
-    <main>
-      <SimpleCover
-        title=" Watch the Latest and Greatest TV Series Online"
-        subTitle="Stream your favorite TV shows, free and without ads."
-        imageUrl="https://www.economiadigital.es/wp-content/uploads/2021/03/Netflix.jpg"
-        searchBar={
-          <SearchBar
-            placeholder="Search for TV Show"
-            searchRef={searchRef}
-            handleSubmit={handleSearch}
-            size="lg"
-            btnText="Search"
-          />
-        }
-      />
-      <main className="mx-auto text-center">
-        <div className="flex mx-auto max-w-6xl border-b-4 pb-3 border-red-600 items-center justify-between">
-          <h2 className="dark:text-white text-3xl">TV Shows</h2>
-          <PaginationBar
-            limit={limit}
-            page={page}
-            pathname="/tvshows"
-            queryParams={queryParams}
-          />
-        </div>
-        <div className="my-8">
-          {tvShows.map((show) => (
-            <TvShowCard key={show.id} {...show} />
-          ))}
-        </div>
-        <div className="flex mx-auto max-w-6xl border-t-4 pt-3 mb-20 border-red-600 items-center justify-between">
-          <h2 className="dark:text-white text-3xl">TV Shows</h2>
-          <PaginationBar
-            limit={limit}
-            page={page}
-            pathname="/tvshows"
-            queryParams={queryParams}
-          />
-        </div>
+    <>
+      <Head>
+        <title>TV Shows</title>
+        <meta
+          name="description"
+          content="Watch the Latest and Greatest TV Series Online"
+        />
+      </Head>
+      <main>
+        <SimpleCover
+          title="Watch the Latest and Greatest TV Series Online"
+          subTitle="Stream your favorite TV shows, free and without ads."
+          imageUrl="https://www.economiadigital.es/wp-content/uploads/2021/03/Netflix.jpg"
+          searchBar={
+            <SearchBar
+              placeholder="Search for TV Show"
+              searchRef={searchRef}
+              handleSubmit={handleSearch}
+              size="lg"
+              btnText="Search"
+            />
+          }
+        />
+        <section className="mx-auto text-center">
+          <div className="flex mx-auto max-w-6xl border-b-4 pb-3 border-red-600 items-center justify-between">
+            <h2 className="dark:text-white text-3xl">TV Shows</h2>
+            <PaginationBar
+              limit={limit}
+              page={page}
+              pathname="/tvshows"
+              queryParams={queryParams}
+            />
+          </div>
+          <div className="my-8">
+            {tvShows.map((show) => (
+              <TvShowCard key={show.id} {...show} />
+            ))}
+          </div>
+          <div className="flex mx-auto max-w-6xl border-t-4 pt-3 mb-20 border-red-600 items-center justify-between">
+            <h2 className="dark:text-white text-3xl">TV Shows</h2>
+            <PaginationBar
+              limit={limit}
+              page={page}
+              pathname="/tvshows"
+              queryParams={queryParams}
+            />
+          </div>
+        </section>
       </main>
-    </main>
+    </>
   )
 }
 
