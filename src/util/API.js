@@ -127,3 +127,13 @@ export const getMoviesByActorId = async (actorId) => {
 
   return data.cast
 }
+
+// TV Shows
+export const getPopularTVShows = async (page) => {
+  const res = await fetch(
+    `${BASE_URL}/tv/popular?api_key=${API_KEY}&page=${page}`,
+  )
+  const data = await res.json()
+
+  return data
+}
