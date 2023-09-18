@@ -104,6 +104,11 @@ function Navbar({ genres }) {
             </div>
             <ul className="flex md:items-center flex-col p-4 md:p-2 mt-4 font-medium border border-gray-10 md:flex-row md:space-x-8 md:mt-0 md:border-0  dark:border-gray-700">
               <NavItem text="Home" link="/" onClose={handleCloseMenu} />
+              <NavItem
+                text="TV Shows"
+                link="/tvshows"
+                onClose={handleCloseMenu}
+              />
               <NavItem text="Actors" link="/actors" onClose={handleCloseMenu} />
               <li>
                 <Dropdown
