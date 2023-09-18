@@ -137,3 +137,23 @@ export const getPopularTVShows = async (page) => {
 
   return data
 }
+
+// show details
+
+export const getShowById = async (showId) => {
+  const res = await fetch(
+    `${BASE_URL}/tv/${showId}?api_key=${API_KEY}&language=en-US`,
+  )
+  const data = await res.json()
+
+  return data
+}
+
+export const getSimilarTVShows = async (tvShowId) => {
+  const res = await fetch(
+    `${BASE_URL}/tv/${tvShowId}/similar?api_key=${API_KEY}&language=en-US`,
+  )
+  const data = await res.json()
+
+  return data.results
+}
