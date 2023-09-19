@@ -9,15 +9,15 @@ export const moviesList = [
 export const teamMembers = [
   {
     id: 1,
-    name: "Riadh Mouamnia",
+    name: "Riadh MOUAMNIA",
     github: "https://github.com/riadhmouamnia",
-    linkedin: " https://www.linkedin.com/in/riadh-mouamnia",
+    linkedin: "https://www.linkedin.com/in/riadh-mouamnia",
     imgSrc:
       "https://logowik.com/content/uploads/images/github-circle-icon1425.jpg",
   },
   {
     id: 2,
-    name: "Mohamed Matassi",
+    name: "Mohamed MATASSI",
     github: "https://github.com/M07am3dM",
     linkedin: "https://www.linkedin.com/in/matassi-mohamed/",
     imgSrc:
@@ -25,7 +25,7 @@ export const teamMembers = [
   },
   {
     id: 3,
-    name: "Meriem Mansouri",
+    name: "Meriem MANSOURI",
     github: "https://github.com/meryem08",
     linkedin: "https://www.linkedin.com/in/meriem-mansouri-1b1643276/",
     imgSrc:
@@ -33,17 +33,17 @@ export const teamMembers = [
   },
   {
     id: 4,
-    name: "Mohamed Matassi",
-    github: "https://github.com/M07am3dM",
-    linkedin: "https://www.linkedin.com/in/matassi-mohamed/",
+    name: "Mohamed TCHOKETCH",
+    github: "https://github.com/",
+    linkedin: "https://www.linkedin.com/in/",
     imgSrc:
       "https://media.licdn.com/dms/image/D4E03AQF5osmJLYc_WQ/profile-displayphoto-shrink_100_100/0/1680787767230?e=1700092800&v=beta&t=iV6EiNamc9HCLL0f4RM8V3JNBT0vSpXb--I2WTklr0Q",
   },
   {
     id: 5,
-    name: "Meriem Mansouri",
+    name: "Abdel Hakim TIABI",
     github: "https://github.com/meryem08",
-    linkedin: "https://www.linkedin.com/in/meriem-mansouri-1b1643276/",
+    linkedin: "https://www.linkedin.com/in/",
     imgSrc:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZEWt9Dr4D_DIzdIrHERkTyeduD4eeuDF2lfX9ojX4UW7WytlfAEB5BALZcKCG-Ahglvo&usqp=CAU",
   },
