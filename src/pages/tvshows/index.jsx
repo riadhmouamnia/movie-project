@@ -1,14 +1,29 @@
+import Head from "next/head"
+import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import { useRef } from "react"
 
+// utils
 import { getTVShows } from "@/util/API"
-import TvShowCard from "@/components/TvShowCard"
-import SearchBar from "@/components/SearchBar"
-import SimpleCover from "@/components/SimpleCover"
-import PaginationBar from "@/components/PaginationBar"
-import Head from "next/head"
 
-function TvShowsPage({ tvShows, page, search, limit }) {
+// component imports
+import SearchBar from "@/components/SearchBar"
+import PaginationPlaceHolder from "@/components/PaginationBar/PaginationPlaceHolder"
+import PageCoverPlaceHolder from "@/components/PageCover/PageCoverPlaceHolder"
+import TvShowCardPlaceHolder from "@/components/TvShowCard/TvShowCardPlaceHolder"
+
+// lazy UI
+const SimpleCover = dynamic(() => import("@/components/SimpleCover"), {
+  loading: () => <PageCoverPlaceHolder />,
+})
+const PaginationBar = dynamic(() => import("@/components/PaginationBar"), {
+  loading: () => <PaginationPlaceHolder />,
+})
+const TvShowCard = dynamic(() => import("@/components/TvShowCard"), {
+  loading: () => <TvShowCardPlaceHolder />,
+})
+
+function TvShowsPage({ tvShows, page, search, limit, name }) {
   const searchRef = useRef()
   const router = useRouter()
   const queryParams = { search }
@@ -32,7 +47,7 @@ function TvShowsPage({ tvShows, page, search, limit }) {
           content="Watch the Latest and Greatest TV Series Online"
         />
       </Head>
-      <main>
+      <main className="mx-auto text-center">
         <SimpleCover
           title="Watch the Latest and Greatest TV Series Online"
           subTitle="Stream your favorite TV shows, free and without ads."
@@ -47,31 +62,25 @@ function TvShowsPage({ tvShows, page, search, limit }) {
             />
           }
         />
-        <section className="mx-auto text-center">
-          <div className="flex mx-auto max-w-6xl border-b-4 pb-3 border-red-600 items-center justify-between">
-            <h2 className="dark:text-white text-3xl">TV Shows</h2>
-            <PaginationBar
-              limit={limit}
-              page={page}
-              pathname="/tvshows"
-              queryParams={queryParams}
-            />
-          </div>
-          <div className="my-8">
-            {tvShows.map((show) => (
-              <TvShowCard key={show.id} {...show} />
-            ))}
-          </div>
-          <div className="flex mx-auto max-w-6xl border-t-4 pt-3 mb-20 border-red-600 items-center justify-between">
-            <h2 className="dark:text-white text-3xl">TV Shows</h2>
-            <PaginationBar
-              limit={limit}
-              page={page}
-              pathname="/tvshows"
-              queryParams={queryParams}
-            />
-          </div>
-        </section>
+        <PaginationBar
+          limit={limit}
+          page={page}
+          pathname="/tvshows"
+          queryParams={queryParams}
+          title={name}
+        />
+        <div className="my-8 min-h-[80vh]">
+          {tvShows.map((show) => (
+            <TvShowCard key={show.id} {...show} />
+          ))}
+        </div>
+        <PaginationBar
+          limit={limit}
+          page={page}
+          pathname="/tvshows"
+          queryParams={queryParams}
+          title={name}
+        />
       </main>
     </>
   )
@@ -82,6 +91,7 @@ export default TvShowsPage
 export async function getServerSideProps({ query }) {
   const page = query.page ? Number(query.page) : 1
   const search = query.search ? query.search : ""
+  const name = query.search ? query.search : "TV Shows"
   const data = await getTVShows(search, page)
   const limit = data.total_pages > 20 ? 20 : data.total_pages
   const tvShows = data.results
@@ -91,6 +101,7 @@ export async function getServerSideProps({ query }) {
       tvShows,
       page,
       limit,
+      name,
     },
   }
 }

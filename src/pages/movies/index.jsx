@@ -1,20 +1,26 @@
+import Head from "next/head"
 import dynamic from "next/dynamic"
 import { useRef } from "react"
 import { useRouter } from "next/navigation"
 
-import MoviesCardGridPlaceHolder from "@/components/MoviesCardGrid/MoviesCardGridPlaceHolder"
-import PageCoverPlaceHolder from "@/components/PageCover/PageCoverPlaceHolder"
-import PaginationBar from "@/components/PaginationBar"
-import SearchBar from "@/components/SearchBar"
-
+// utils
 import { fetchMovies } from "@/util/API"
-import Head from "next/head"
 
-const MoviesCardGrid = dynamic(() => import("@/components/MoviesCardGrid"), {
-  loading: () => <MoviesCardGridPlaceHolder />,
+// component imports
+import PageCoverPlaceHolder from "@/components/PageCover/PageCoverPlaceHolder"
+import SearchBar from "@/components/SearchBar"
+import MovieCardPlaceHolder from "@/components/MovieCard/MovieCardPlaceHolder"
+import PaginationPlaceHolder from "@/components/PaginationBar/PaginationPlaceHolder"
+
+// lazy UI
+const MovieCard = dynamic(() => import("@/components/MovieCard"), {
+  loading: () => <MovieCardPlaceHolder />,
 })
 const SimpleCover = dynamic(() => import("@/components/SimpleCover"), {
   loading: () => <PageCoverPlaceHolder />,
+})
+const PaginationBar = dynamic(() => import("@/components/PaginationBar"), {
+  loading: () => <PaginationPlaceHolder />,
 })
 
 function MoviesPage({ movies, name, category, genre, search, page, limit }) {
@@ -56,28 +62,26 @@ function MoviesPage({ movies, name, category, genre, search, page, limit }) {
           />
         }
       />
-      <main>
-        <div className="flex mx-auto max-w-6xl border-b-4 pb-3 border-red-600 items-center justify-between">
-          <h2 className="dark:text-white text-3xl">{name}</h2>
-          <PaginationBar
-            pathname="/movies"
-            limit={limit}
-            page={page}
-            queryParams={queryParams}
-          />
+      <main className="mx-auto text-center">
+        <PaginationBar
+          pathname="/movies"
+          limit={limit}
+          page={page}
+          title={name}
+          queryParams={queryParams}
+        />
+        <div className="my-8 min-h-[80vh]">
+          {movies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
         </div>
-        <div className="my-8">
-          <MoviesCardGrid movies={movies} />
-        </div>
-        <div className="flex mx-auto max-w-6xl border-t-4 pt-3 mb-20 border-red-600 items-center justify-between">
-          <h2 className="dark:text-white text-3xl">{name}</h2>
-          <PaginationBar
-            pathname="/movies"
-            limit={limit}
-            page={page}
-            queryParams={queryParams}
-          />
-        </div>
+        <PaginationBar
+          pathname="/movies"
+          limit={limit}
+          page={page}
+          title={name}
+          queryParams={queryParams}
+        />
       </main>
     </>
   )

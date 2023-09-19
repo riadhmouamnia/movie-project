@@ -4,7 +4,7 @@ import YouTube from "react-youtube"
 import { AiOutlineCloseCircle } from "react-icons/ai"
 
 function VideoModal({ open, onClose, trailer }) {
-  const [player, setPlayer] = useState(null)
+  const [player, setPlayer] = useState({})
 
   const handlePause = () => {
     if (player) {
