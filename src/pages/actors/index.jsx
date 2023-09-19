@@ -1,14 +1,16 @@
+import Head from "next/head"
 import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
 import { useRef } from "react"
 
+// utils
+import { fetchActors } from "@/util/API"
+
+// components import
 import ActorCardPlaceHolder from "@/components/ActorCard/ActorCardPlaceHolder"
 import SearchBar from "@/components/SearchBar"
 import PageCoverPlaceHolder from "@/components/PageCover/PageCoverPlaceHolder"
-import PaginationBar from "@/components/PaginationBar"
-
-import { fetchActors } from "@/util/API"
-import Head from "next/head"
+import PaginationPlaceHolder from "@/components/PaginationBar/PaginationPlaceHolder"
 
 // lazy UI
 const ActorCard = dynamic(() => import("@/components/ActorCard"), {
@@ -17,8 +19,11 @@ const ActorCard = dynamic(() => import("@/components/ActorCard"), {
 const SimpleCover = dynamic(() => import("@/components/SimpleCover"), {
   loading: () => <PageCoverPlaceHolder />,
 })
+const PaginationBar = dynamic(() => import("@/components/PaginationBar"), {
+  loading: () => <PaginationPlaceHolder />,
+})
 
-const ActorsPage = ({ page, actors, search, limit }) => {
+const ActorsPage = ({ page, actors, search, limit, name }) => {
   const searchRef = useRef()
   const router = useRouter()
   const queryParams = { search }
@@ -35,7 +40,7 @@ const ActorsPage = ({ page, actors, search, limit }) => {
   return (
     <>
       <Head>
-        <title>Popular Actors</title>
+        <title>{name}</title>
         <meta
           name="description"
           content="See the stars of your favorite movies and TV shows up close and personal."
@@ -55,30 +60,26 @@ const ActorsPage = ({ page, actors, search, limit }) => {
           />
         }
       />
-      <main className="mx-auto text-center">
-        <div className="flex mx-auto max-w-6xl border-b-4 pb-3 border-red-600 items-center justify-between">
-          <h2 className="dark:text-white text-3xl">Actors</h2>
-          <PaginationBar
-            limit={limit}
-            page={page}
-            pathname="/actors"
-            queryParams={queryParams}
-          />
-        </div>
+      <main className="mx-auto text-center min-h-[80vh]">
+        <PaginationBar
+          limit={limit}
+          page={page}
+          pathname="/actors"
+          queryParams={queryParams}
+          title={name}
+        />
         <div className="my-8">
           {actors.map((actor) => (
             <ActorCard key={actor.id} {...actor} />
           ))}
         </div>
-        <div className="flex mx-auto max-w-6xl border-t-4 pt-3 mb-20 border-red-600 items-center justify-between">
-          <h2 className="dark:text-white text-3xl">Actors</h2>
-          <PaginationBar
-            limit={limit}
-            page={page}
-            pathname="/actors"
-            queryParams={queryParams}
-          />
-        </div>
+        <PaginationBar
+          limit={limit}
+          page={page}
+          pathname="/actors"
+          queryParams={queryParams}
+          title={name}
+        />
       </main>
     </>
   )
@@ -89,6 +90,7 @@ export default ActorsPage
 export async function getServerSideProps({ query }) {
   const page = query.page ? Number(query.page) : 1
   const search = query.search ? query.search : ""
+  const name = query.search ? query.search : "Actors"
   const data = await fetchActors(search, page)
   const limit = data.total_pages > 20 ? 20 : data.total_pages
   const actors = await data.results
@@ -98,6 +100,7 @@ export async function getServerSideProps({ query }) {
       page,
       search,
       limit,
+      name,
     },
   }
 }

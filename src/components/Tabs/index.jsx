@@ -4,9 +4,14 @@ import Overview from "./Overview"
 import Trailer from "./Trailer"
 import Actors from "./Actors"
 import Companies from "./Companies"
+import { BsFillStarFill } from "react-icons/bs"
 
 function Tabs({ movie, similarMovies, trailer, actors }) {
   const [activeTab, setActiveTab] = useState(0)
+  const [releseYear] = movie.release_date.split("-")
+  const hours = Math.floor(movie.runtime / 60)
+  const minutes = movie.runtime % 60
+  const formattedRuntime = `${hours}h ${minutes}min`
 
   const tabItems = [
     {
@@ -24,6 +29,16 @@ function Tabs({ movie, similarMovies, trailer, actors }) {
 
   return (
     <>
+      <h1 className="dark:text-white text-4xl mb-4 font-bold flex justify-between">
+        {movie.original_title}
+        <span className="flex items-center gap-2">
+          {movie.vote_average} <BsFillStarFill className="text-yellow-500" />
+        </span>
+      </h1>
+      <p className="text-gray-400 text-sm flex items-center gap-2 mb-10">
+        <span>{releseYear}</span>|<span>{formattedRuntime}</span>|
+        <span>{movie.adult ? "18+" : "16+"}</span>
+      </p>
       <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
         <ul className="flex flex-wrap ">
           {tabItems.map((tab, index) => (

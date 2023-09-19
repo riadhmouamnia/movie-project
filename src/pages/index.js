@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic"
 import Head from "next/head"
 
+// utils
 import {
   getHomePageMovies,
   getMovieTrailer,
@@ -8,9 +9,11 @@ import {
   requests,
 } from "@/util/API"
 
+// component imports
 import RowPlaceHolder from "@/components/Row/RowPlaceHolder"
 import PageCoverPlaceHolder from "@/components/PageCover/PageCoverPlaceHolder"
 
+// lazy UI
 const PageCover = dynamic(() => import("@/components/PageCover"), {
   loading: () => <PageCoverPlaceHolder />,
 })
