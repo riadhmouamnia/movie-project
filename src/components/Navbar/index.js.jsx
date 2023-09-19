@@ -61,9 +61,9 @@ function Navbar({ genres }) {
           } max-w-screen-xl md:bg-transparent flex flex-wrap items-center justify-between mx-auto p-4`}
         >
           <Link href="/" className="flex items-center">
-            <h3 className="self-center text-2xl whitespace-nowrap text-red-700 font-black">
-              Popcorn Palace
-            </h3>
+            <h1 className="self-center text-2xl whitespace-nowrap text-red-700 font-black">
+              POPCORNPALACE
+            </h1>
           </Link>
           {/* Mobile Buttons */}
           <div className="flex md:order-2 ">

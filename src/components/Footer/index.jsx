@@ -10,9 +10,9 @@ function Footer() {
         <div className="md:flex sm:items-center md:justify-between">
           <div className="mb-6 md:mb-0 w-full md:flex-1 mr-20">
             <Link href="/">
-              <h3 className="self-center text-2xl whitespace-nowrap text-red-700 font-black">
-                Popcorn Palace
-              </h3>
+              <h4 className="self-center text-2xl whitespace-nowrap text-red-700 font-black">
+                POPCORNPALACE
+              </h4>
             </Link>
           </div>
           <div className="flex justify-end gap-8 w-full mx-auto md:flex-3">
@@ -56,11 +56,11 @@ function Footer() {
                 </ul>
               </div>
             </div>
-            <div>
+            <div className="w-2/6">
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                About
+                <Link href="/about">About</Link>
               </h2>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
+              <ul className="text-gray-500 dark:text-gray-400 font-medium ">
                 {about.map((item) => (
                   <li key={item.id} className="mb-4">
                     <a
