@@ -87,5 +87,6 @@ export async function getStaticProps() {
       randomMovie,
       coverTrailer,
     },
+    revalidate: 10,
   }
 }
