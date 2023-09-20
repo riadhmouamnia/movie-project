@@ -56,7 +56,7 @@ export const fetchMovies = async (query, category, genre, page) => {
     return data
   } else {
     const res = await fetch(
-      `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&${page}`,
+      `${BASE_URL}/movie/popular?api_key=${API_KEY}&page=${page}`,
     )
     const data = await res.json()
     return data

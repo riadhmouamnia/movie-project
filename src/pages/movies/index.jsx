@@ -26,15 +26,22 @@ const PaginationBar = dynamic(() => import("@/components/PaginationBar"), {
 function MoviesPage({ movies, name, category, genre, search, page, limit }) {
   const searchRef = useRef()
   const router = useRouter()
-  const queryParams = { name, search, category, genre }
+  const queryParams = {
+    ...(name ? { name } : {}),
+    ...(search ? { search } : {}),
+    ...(category ? { category } : {}),
+    ...(genre ? { genre } : {}),
+  }
 
   function handleSearch(e) {
     e.preventDefault()
     const search = searchRef.current.value
-    console.log(search)
+
     router.push({
       pathname: "/movies",
-      query: { search, category, genre, page: 1 },
+      query: {
+        search,
+      },
     })
     searchRef.current.value = ""
   }
@@ -75,13 +82,6 @@ function MoviesPage({ movies, name, category, genre, search, page, limit }) {
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
-        <PaginationBar
-          pathname="/movies"
-          limit={limit}
-          page={page}
-          title={name}
-          queryParams={queryParams}
-        />
       </main>
     </>
   )
@@ -93,7 +93,7 @@ export async function getServerSideProps({ query }) {
   const page = query.page ? Number(query.page) : 1
   const category = query.category ? query.category : ""
   const genre = query.genre ? query.genre : ""
-  const name = query.name ? query.name : query.search
+  const name = query.search || query.name || "Movies"
   const search = query.search ? query.search : ""
   const data = await fetchMovies(search, category, genre, page)
   const limit = data.total_pages > 20 ? 20 : data.total_pages

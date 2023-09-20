@@ -19,24 +19,23 @@ function Navbar({ genres }) {
     const name = search
     router.push({
       pathname: "/movies",
-      query: { name, search, category: "", genre: "", page: 1 },
+      query: { search },
     })
     searchRef.current.value = ""
   }
 
   function handleSelect(id, name, title) {
-    console.log("from: ", id)
     if (title === "Movies") {
       const category = id
       router.push({
         pathname: "/movies",
-        query: { name, search: "", category, genre: "", page: 1 },
+        query: { name, category },
       })
     } else {
       const genre = id
       router.push({
         pathname: "/movies",
-        query: { name, search: "", category: "", genre, page: 1 },
+        query: { name, genre },
       })
     }
   }
