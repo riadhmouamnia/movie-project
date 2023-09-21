@@ -46,8 +46,10 @@ function Tabs({ movie, similarMovies, trailer, actors }) {
               onClick={() => handleTabClick(index)}
               key={index}
               className={`${
-                activeTab === index ? "active text-red-500 border-red-500" : ""
-              } mr-2 p-4 border-b-4 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 cursor-pointer`}
+                activeTab === index
+                  ? "active text-red-600 border-red-600 border-b-4 "
+                  : "border-transparent"
+              } mr-2 p-4 border-b-4  rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 cursor-pointer`}
             >
               {tab.label}
             </li>
