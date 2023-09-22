@@ -53,7 +53,7 @@ function Navbar({ genres }) {
   }
   return (
     <>
-      <nav className=" fixed w-full z-30 top-0 left-0 bg-gradient-to-b from-slate-950 to-transparent">
+      <nav className=" fixed w-full z-30 top-0 left-0 bg-gradient-to-b from-black to-transparent">
         <div
           className={`${
             open ? "bg-black" : ""

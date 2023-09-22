@@ -4,7 +4,7 @@
 
 @layer components {
   body {
-    @apply dark:bg-slate-950;
+    @apply dark:bg-black;
   }
 }
 
