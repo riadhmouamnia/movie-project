@@ -26,14 +26,14 @@ const PaginationBar = dynamic(() => import("@/components/PaginationBar"), {
 const ActorsPage = ({ page, actors, search, limit, name }) => {
   const searchRef = useRef()
   const router = useRouter()
-  const queryParams = { search }
+  const queryParams = { ...(search ? { search } : {}) }
 
   function handleSearch(e) {
     e.preventDefault()
     const search = searchRef.current.value
     router.push({
       pathname: "/actors",
-      query: { search, page: 1 },
+      query: { search },
     })
     searchRef.current.value = ""
   }
@@ -73,13 +73,6 @@ const ActorsPage = ({ page, actors, search, limit, name }) => {
             <ActorCard key={actor.id} {...actor} />
           ))}
         </div>
-        <PaginationBar
-          limit={limit}
-          page={page}
-          pathname="/actors"
-          queryParams={queryParams}
-          title={name}
-        />
       </main>
     </>
   )

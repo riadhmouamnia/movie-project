@@ -26,14 +26,15 @@ const TvShowCard = dynamic(() => import("@/components/TvShowCard"), {
 function TvShowsPage({ tvShows, page, search, limit, name }) {
   const searchRef = useRef()
   const router = useRouter()
-  const queryParams = { search }
+  const queryParams = { ...(search ? { search } : {}) }
 
   function handleSearch(e) {
     e.preventDefault()
     const search = searchRef.current.value
+
     router.push({
       pathname: "/tvshows",
-      query: { search, page: 1 },
+      query: { search },
     })
     searchRef.current.value = ""
   }
@@ -63,24 +64,22 @@ function TvShowsPage({ tvShows, page, search, limit, name }) {
           }
         />
         <PaginationBar
+          pathname="/tvshows"
           limit={limit}
           page={page}
-          pathname="/tvshows"
-          queryParams={queryParams}
           title={name}
+          queryParams={queryParams}
         />
         <div className="my-8 min-h-[80vh]">
+          {!tvShows.length && (
+            <h1 className="dark:text-white text-4xl">
+              No TV SHOW Found that matches: {name}
+            </h1>
+          )}
           {tvShows.map((show) => (
             <TvShowCard key={show.id} {...show} />
           ))}
         </div>
-        <PaginationBar
-          limit={limit}
-          page={page}
-          pathname="/tvshows"
-          queryParams={queryParams}
-          title={name}
-        />
       </main>
     </>
   )
@@ -90,15 +89,16 @@ export default TvShowsPage
 
 export async function getServerSideProps({ query }) {
   const page = query.page ? Number(query.page) : 1
-  const search = query.search ? query.search : ""
   const name = query.search ? query.search : "TV Shows"
+  const search = query.search ? query.search : ""
   const data = await getTVShows(search, page)
-  const limit = data.total_pages > 20 ? 20 : data.total_pages
+  const limit = data?.total_pages > 20 ? 20 : data.total_pages
   const tvShows = data.results
 
   return {
     props: {
       tvShows,
+      search,
       page,
       limit,
       name,
