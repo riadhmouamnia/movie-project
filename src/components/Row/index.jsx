@@ -20,6 +20,7 @@ function Row({ title, movies, rowID }) {
         </h2>
       )}
       <div className="relative flex items-center group">
+        <div className="absolute w-[15%] h-full bg-gradient-to-r from-black to-transparent z-10" />
         <MdChevronLeft
           onClick={slideLeft}
           className="bg-white left-0 rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block"
@@ -27,7 +28,7 @@ function Row({ title, movies, rowID }) {
         />
         <div
           id={"slider" + rowID}
-          className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth no-scrollbar relative"
+          className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth no-scrollbar"
         >
           {movies.map((movie, id) => (
             <MovieCard key={id} movie={movie} />
@@ -35,9 +36,10 @@ function Row({ title, movies, rowID }) {
         </div>
         <MdChevronRight
           onClick={slideRight}
-          className="bg-white right-0 rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block"
+          className="bg-white right-0 rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-20 hidden group-hover:block"
           size={40}
         />
+        <div className="absolute right-0 w-[15%] h-full bg-gradient-to-l from-black to-transparent z-10" />
       </div>
     </>
   )
