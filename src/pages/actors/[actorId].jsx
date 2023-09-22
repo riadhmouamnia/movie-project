@@ -27,7 +27,7 @@ function ActorDetails({ actor, movies }) {
         <meta name="description" content={actor.biography} />
       </Head>
       <div className="h-[70px] lg:h-[100px] md:h-[150px]"></div>
-      <main className="grid gap-8 md:grid-cols-6 xl:px-20 p-8">
+      <main className="p-4 grid xl:grid-cols-9 xl:p-20 md:p-8 grid-cols-1 sm:grid-col-1 gap-24 md:grid-cols-2 md:mt-16">
         <PosterImage URL={actor.profile_path} />
         <ActorCardDetails actor={actor} movies={movies} />
       </main>

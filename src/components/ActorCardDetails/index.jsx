@@ -1,13 +1,31 @@
 import { BsFillStarFill } from "react-icons/bs"
 import Row from "../Row"
+import { useState } from "react"
 
 const ActorCardDetails = ({ actor, movies }) => {
+  const [textLen, setTextLen] = useState(400)
+
+  const handleClikc = () => {
+    if (textLen === actor?.biography.length) {
+      setTextLen(400)
+    } else {
+      setTextLen(actor?.biography.length)
+    }
+  }
+
+  const truncateString = (str) => {
+    if (str?.length > textLen) {
+      return str.slice(0, textLen) + "..."
+    } else {
+      return str
+    }
+  }
   return (
-    <div className="lg:cols-span-5 md:col-span-4 ">
+    <div className="xl:col-span-5">
       <h1 className="dark:text-white text-white text-4xl font-bold border-b-4 pb-2 border-red-600">
         <span className="flex justify-between items-center">
           {actor.name}
-          <span className="text-xl flex items-center justify-center gap-2">
+          <span className="text-3xl flex items-center justify-center gap-2">
             {actor.popularity}
             <BsFillStarFill className="text-yellow-500" />
           </span>
@@ -33,7 +51,19 @@ const ActorCardDetails = ({ actor, movies }) => {
       )}
       <p className="dark:text-white mt-2">
         <span className="dark:text-gray-500 font-medium pr-1">ABOUT:</span>
-        <span>{actor.biography}</span>
+        <span className="font-light text-lg dark:text-gray-300">
+          {actor?.biography.length > 400 && (
+            <>
+              <span>{truncateString(actor?.biography)}</span>
+              <span
+                onClick={handleClikc}
+                className="pl-3 text-gray-500 cursor-pointer dark:hover:text-white hover:text-black"
+              >
+                {actor?.biography.length > textLen ? "read more" : "hide"}
+              </span>
+            </>
+          )}
+        </span>
       </p>
       <p className="dark:text-white mt-2">
         <span className="dark:text-gray-500 font-medium pr-1">BIRTHDAY:</span>

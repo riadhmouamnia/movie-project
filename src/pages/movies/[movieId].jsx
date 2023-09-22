@@ -28,9 +28,9 @@ function MovieDetails({ movie, similarMovies, trailer, actors }) {
         <title>{movie.original_title}</title>
         <meta name="description" content={movie.overview} />
       </Head>
-      <main className="p-4 grid xl:grid-cols-6 xl:p-10 xl:my-10 grid-cols-1 sm:grid-col-1 gap-6 md:grid-cols-2 md:mt-16">
+      <main className="p-4 grid xl:grid-cols-9 xl:p-20 md:p-8 grid-cols-1 sm:grid-col-1 gap-24 md:grid-cols-2 md:mt-16">
         <PosterImage URL={movie?.poster_path} />
-        <div className="xl:col-span-4">
+        <div className="xl:col-span-5">
           {/* Tabs */}
           <Tabs
             movie={movie}

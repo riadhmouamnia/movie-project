@@ -4,7 +4,7 @@ function Overview({ movie, similar }) {
   return (
     <div className="py-8 ">
       <h4 className="dark:text-white text-2xl mb-4">{movie.tagline}</h4>
-      <p className="mb-8 dark: font-light text-lg text-gray-300">
+      <p className="mb-8 font-light text-lg dark:text-gray-300">
         {movie.overview}
       </p>
       <p className="flex items-center gap-2 py-1">
@@ -32,7 +32,9 @@ function Overview({ movie, similar }) {
         ))}
       </p>
       <h5 className="my-8 text-3xl font-semibold dark:text-white">
-        {similar ? "Related movies:" : "No similar movies found"}
+        {similar.length
+          ? "Related movies:"
+          : "No similar movies found in this API."}
       </h5>
       <div>{similar && <Row rowID="1" movies={similar} />}</div>
     </div>

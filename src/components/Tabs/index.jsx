@@ -29,7 +29,7 @@ function Tabs({ movie, similarMovies, trailer, actors }) {
 
   return (
     <>
-      <h1 className="dark:text-white text-4xl mb-4 font-bold flex justify-between">
+      <h1 className="dark:text-white xl:text-4xl text-3xl mb-4 font-bold flex justify-between">
         {movie.original_title}
         <span className="flex items-center gap-2">
           {movie.vote_average} <BsFillStarFill className="text-yellow-500" />
@@ -49,7 +49,7 @@ function Tabs({ movie, similarMovies, trailer, actors }) {
                 activeTab === index
                   ? "active text-red-600 border-red-600 border-b-4 "
                   : "border-transparent"
-              } mr-2 p-4 border-b-4  rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 cursor-pointer`}
+              } w-1/4 py-4 border-b-4  rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 text-center cursor-pointer`}
             >
               {tab.label}
             </li>
